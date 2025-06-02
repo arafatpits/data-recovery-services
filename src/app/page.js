@@ -1,9 +1,8 @@
-import Image from "next/image";
+import Header from "@/components/layout/header"
+import { COMPANY_INFO } from "@/lib/constants"
 
-export default function Home() {
+export default function HomePage() {
   return (
-   <h1 className="text-3xl font-bold underline">
-      Hello world!
-    </h1>
+    <Header/>
   );
 }
