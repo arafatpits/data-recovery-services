@@ -1,11 +1,10 @@
 @import "tailwindcss";
 
 :root {
-  --heading: #1e40af;
-  --body: #374151;
-  --button: #2563eb;
-  --button-hover: #1d4ed8;
-  --accent: #10b981;
+  --heading: #1c1c1c;
+  --body: #595959;
+  --white:#ffffff;
+  --accent: #00E0A8;
   --border: #e5e7eb;
   --radius: 0.5rem;
   --background: #ffffff;
@@ -27,6 +26,7 @@
 }
 
 @theme {
+  --color-white:var(--white);
   --color-heading: var(--heading);
   --color-body: var(--body);
   --color-button: var(--button);
@@ -70,6 +70,5 @@ h4,
 h5,
 h6 {
   font-family: var(--font-heading);
-  color: var(--color-heading);
   font-weight: 600;
 }
