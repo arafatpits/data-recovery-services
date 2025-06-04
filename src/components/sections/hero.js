@@ -1,75 +1,39 @@
-import Image from "next/image";
-import { COMPANY_INFO } from "@/lib/constants";
-import ConsultationForm from "@/components/forms/consultation-form";
-import { Phone } from "lucide-react";
+"use client"
+import { COMPANY_INFO } from "@/lib/constants"
+import ConsultationForm from "@/components/forms/consultation-form"
+import { Phone } from "lucide-react"
 
 export default function Hero({ title, subtitle, imgsrc }) {
-  const heroTitle = title || "Lost Your Data?";
+  const heroTitle = title || "Data Recovery Services"
   const heroDescription =
     subtitle ||
-    "Professional data recovery services with 95% success rate. No data, no fee guarantee.";
-  const imageSrc = imgsrc || "/images/default-hero.jpg";
+    "Professional recovery for damaged, clicking, or failed hard drives. Our clean room facilities and expert technicians ensure maximum data recovery success."
+  const imageSrc =
+    imgsrc || "https://www.pitsdatarecovery.com/wp-content/uploads/2025/01/hard-drive-1024x683.webp"
 
   return (
-    <>
-      <div className="hidden lg:flex bg-black/80 text-white py-16">
-        <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 flex gap-12 items-start">
-          {/* Left: Content */}
-          <div className="flex-1 min-w-0">
-            <div className="relative h-96 rounded-2xl overflow-hidden mb-8">
-              <Image
-                src={imageSrc}
-                alt={heroTitle}
-                height={400}
-                width={600}
-                className="object-cover w-full h-full"
-                priority
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
-              <div className="absolute bottom-6 left-6">
-                <h1 className="text-4xl font-bold text-white">{heroTitle}</h1>
-              </div>
-            </div>
-
-            <div className="space-y-4">
-              <p className="text-xl text-white max-w-xl">{heroDescription}</p>
-              <a
-                href={`tel:${COMPANY_INFO.phone.tel}`}
-                className="flex items-center gap-3 text-5xl font-primary text-accent font-bold hover:underline"
-              >
-                <Phone size={40} strokeWidth={1.5} />
-                {COMPANY_INFO.phone.display}
-              </a>
-            </div>
-          </div>
-
-          {/* Right: Form */}
-          <div className="w-full max-w-md shrink-0">
-            <ConsultationForm
-              formTitle="HOW MUCH WILL IT COST?"
-              formDescription="Get A Free, No-Obligation Quote"
-            />
-          </div>
-        </div>
-      </div>
-
-      {/* Mobile View */}
-      <div className="lg:hidden bg-black/80 text-white">
-        <div className="relative h-[350px] md:h-[400px]">
-          <Image
-            src={imageSrc}
-            alt={heroTitle}
-            fill
-            className="object-cover"
-            priority
-          />
-          <div className="absolute inset-0 bg-black/70" />
-          <div className="absolute inset-0 flex flex-col justify-center items-center text-center px-4">
-            <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">{heroTitle}</h1>
-            <p className="text-lg md:text-xl text-white/80 mb-4 max-w-md">{heroDescription}</p>
+    <section
+      className="relative w-full text-white py-14"
+      style={{
+        backgroundImage: `linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url(${imageSrc})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+      }}
+    >
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row items-center justify-center gap-10">
+        <div className="flex-1 text-center lg:text-left">
+          <h1 className="text-4xl sm:text-5xl lg:text-5xl font-bold mb-4 leading-tight">
+            {heroTitle}
+          </h1>
+          <p className="text-base sm:text-lg lg:text-xl max-w-xl mx-auto lg:mx-0 mb-6">
+            {heroDescription}
+          </p>
+          <div className="bg-black/40 p-4 rounded-md inline-block">
+            <p className="mb-2 text-sm text-white">Need Help Now? Call Our Experts:</p>
             <a
               href={`tel:${COMPANY_INFO.phone.tel}`}
-              className="flex items-center gap-3 text-4xl md:text-5xl font-primary text-accent font-bold hover:underline"
+              className="flex items-center justify-center lg:justify-start gap-3 text-4xl sm:text-5xl font-bold text-accent hover:text-accent/80 transition-colors"
             >
               <Phone size={36} strokeWidth={1.5} />
               {COMPANY_INFO.phone.display}
@@ -77,11 +41,14 @@ export default function Hero({ title, subtitle, imgsrc }) {
           </div>
         </div>
 
-        <ConsultationForm
-          formTitle="HOW MUCH WILL IT COST?"
-          formDescription="Get A Free, No-Obligation Quote"
-        />
+        <div className="w-full lg:max-w-md">
+          <ConsultationForm
+            formTitle="HOW MUCH WILL IT COST?"
+            formDescription="Get A Free, No-Obligation Quote"
+            className="bg-accent w-full"
+          />
+        </div>
       </div>
-    </>
-  );
+    </section>
+  )
 }

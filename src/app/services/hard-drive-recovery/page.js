@@ -1,17 +1,16 @@
-import UniversalTemplate from "@/components/layout/universal-template"
-import HardDriveDetails from "@/components/sections/hard-drive-details"
+import PageShell from "@/components/layout/page-shell"
 
-export default function HardDriveRecoveryPage() {
-  const heroConfig = {
-    title: "Hard Drive Data Recovery",
-    subtitle:
-      "Professional recovery for damaged, clicking, or failed hard drives. Our clean room facilities and expert technicians ensure maximum data recovery success.",
-      imgsrc:"/images/data-recovery-workspace.jpg"
-  }
-
+export default function ExternalDrivePage() {
   return (
-    <UniversalTemplate heroConfig={heroConfig}>
-      <HardDriveDetails />
-    </UniversalTemplate>
+    <PageShell
+      heroProps={{
+        title: "External Drive Not Working?",
+        subtitle: "We specialize in recovering data from failed external drives.",
+      }}
+    >
+      <div>
+        {/* Page-specific content here */}
+      </div>
+    </PageShell>
   )
 }
