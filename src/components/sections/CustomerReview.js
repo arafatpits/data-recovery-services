@@ -4,8 +4,10 @@ import {
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
-} from "@/components/ui/carousel";
-import { ReviewCard } from "@/components/ui/ReviewCard";
+} from "@/components/ui/carousel"
+import { ReviewCard } from "@/components/ui/ReviewCard"
+import SectionHeader from "../ui/SectionHeader"
+import { Description } from "@radix-ui/react-dialog"
 
 export default function CustomerReview() {
   const reviews = [
@@ -39,21 +41,15 @@ export default function CustomerReview() {
       review:
         "Incredible results! They recovered data from a water-damaged external drive that other companies said was impossible to recover. True experts in their field.",
     },
-  ];
+  ]
 
   return (
-    <section className="bg-secondary py-16">
+    <section className="pt-10 lg:pt-16 pb-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-heading font-bold text-heading mb-4">
-            What Our Clients Say
-          </h2>
-          <p className="text-lg text-body text-muted-foreground max-w-2xl mx-auto">
-            Hear from real customers who’ve trusted us with their most important data.
-          </p>
-        </div>
-
-        <div className="relative">
+        {/* Section Header */}
+        <SectionHeader title="What Our Clients Say" description="Hear from real customers who’ve trusted us with their most important data."/>
+        {/* Carousel */}
+        <div className="relative mx-auto max-w-[90%] md:max-w-[95%] lg:max-w-[90%]">
           <Carousel
             opts={{
               align: "start",
@@ -75,11 +71,20 @@ export default function CustomerReview() {
                 </CarouselItem>
               ))}
             </CarouselContent>
-            <CarouselPrevious className="hidden sm:flex -left-12" />
-            <CarouselNext className="hidden sm:flex -right-12" />
+
+            <CarouselPrevious
+              className="absolute cursor-pointer -left-8 top-1/2 -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-accent hover:bg-accent-600 text-white shadow-md transition focus:outline-none focus:ring-2 focus:ring-ring"
+              aria-label="Previous testimonials"
+              role="button"
+            />
+            <CarouselNext
+              className="absolute cursor-pointer -right-8 top-1/2 -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-accent hover:bg-accent-600 text-white shadow-md transition focus:outline-none focus:ring-2 focus:ring-ring"
+              aria-label="Next testimonials"
+              role="button"
+            />
           </Carousel>
         </div>
       </div>
     </section>
-  );
+  )
 }

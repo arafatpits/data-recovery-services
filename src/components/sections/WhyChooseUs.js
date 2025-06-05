@@ -1,6 +1,6 @@
-"use client"
-
 import { CheckCircle, ShieldCheck, Server, PenTool } from "lucide-react"
+import SectionHeader from "@/components/ui/SectionHeader"
+import { Card, CardContent } from "@/components/ui/card"
 
 export default function WhyChooseUs() {
   const advantages = [
@@ -31,20 +31,28 @@ export default function WhyChooseUs() {
   ]
 
   return (
-    <section className="bg-muted py-12 rounded-xl">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
-        <h2 className="text-2xl sm:text-3xl font-heading text-heading mb-6">Why Choose Us</h2>
-        <div className="space-y-6">
+    <section className="pt-10 lg:pt-16 pb-20">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <SectionHeader
+          title="Why Choose Us"
+          description="What sets our data recovery services apart from the rest."
+        />
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 mt-10">
           {advantages.map((adv, index) => {
             const Icon = adv.icon
             return (
-              <div key={index} className="flex items-start gap-4">
-                <Icon className="text-accent h-8 w-8 mt-1" />
-                <div className="flex-1">
-                  <h3 className="text-xl font-heading text-heading mb-1">{adv.title}</h3>
-                  <p className="text-body">{adv.description}</p>
-                </div>
-              </div>
+              <Card key={index} className="bg-primary-800 text-white h-full p-0">
+                <CardContent className="p-6 flex flex-col items-start">
+                  <Icon className="h-8 w-8 text-accent mb-4 mt-1" />
+                  <h3 className="text-lg font-semibold text-white mb-2">
+                    {adv.title}
+                  </h3>
+                  <p className="text-base text-white/90 leading-relaxed">
+                    {adv.description}
+                  </p>
+                </CardContent>
+              </Card>
             )
           })}
         </div>

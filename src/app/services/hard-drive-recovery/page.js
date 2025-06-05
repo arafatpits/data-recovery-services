@@ -1,4 +1,4 @@
-import PageShell from "@/components/layout/page-shell"
+import PageShell from "@/components/layout/PageShell"
 
 export default function ExternalDrivePage() {
   return (
@@ -8,9 +8,6 @@ export default function ExternalDrivePage() {
         subtitle: "We specialize in recovering data from failed external drives.",
       }}
     >
-      <div>
-        {/* Page-specific content here */}
-      </div>
     </PageShell>
   )
 }
