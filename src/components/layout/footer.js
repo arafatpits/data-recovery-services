@@ -7,7 +7,7 @@ export default function Footer() {
         <div className="md:flex md:justify-between md:items-start gap-12">
           <div className="mb-10 md:mb-0 max-w-md">
             <a href="/" className="flex items-center mb-4">
-              <Image src="/images/logo.svg" alt="Company Logo" width={140} height={36} />
+              <Image src="/images/drs-logo.svg" alt="Company Logo" width={250} height={36} />
             </a>
             <p className="text-base leading-relaxed">
               PITS Global Data Recovery Services is a trusted leader in secure data retrieval solutions,
