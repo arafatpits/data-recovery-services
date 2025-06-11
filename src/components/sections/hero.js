@@ -2,13 +2,28 @@ import { COMPANY_INFO } from "@/lib/constants"
 import ConsultationForm from "@/components/forms/consultation-form"
 import { Phone } from "lucide-react"
 
-export default function Hero({ title, subtitle, imgsrc }) {
-  const heroTitle = title || "Data Recovery Services"
-  const heroDescription =
-    subtitle ||
-    "Professional recovery for damaged, clicking, or failed hard drives. Our clean room facilities and expert technicians ensure maximum data recovery success."
-  const imageSrc =
-    imgsrc || "https://www.pitsdatarecovery.com/wp-content/uploads/2025/01/hard-drive-1024x683.webp"
+export default function Hero({ title, title1, title2, subtitle, imgsrc }) {
+  const heroTitle1 = title1 || title 
+  const heroTitle2 = title2
+
+  const heroDescription = subtitle
+  const imageSrc = imgsrc
+
+  const renderTitle = () => {
+    if (heroTitle1 && heroTitle2) {
+      return (
+        <>
+          <span>{heroTitle1}</span>
+          <br />
+          <span>{heroTitle2}</span>
+        </>
+      )
+    }
+    if (heroTitle1) {
+      return <span>{heroTitle1}</span>
+    }
+    return null
+  }
 
   return (
     <section
@@ -22,12 +37,17 @@ export default function Hero({ title, subtitle, imgsrc }) {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col lg:flex-row items-center justify-center gap-10">
         <div className="flex-1 text-left sm:text-center lg:text-left">
-          <h1 className="text-4xl lg:text-5xl font-bold mb-4 leading-tight">
-            {heroTitle}
-          </h1>
-          <p className="text-base sm:text-lg lg:text-xl max-w-xl sm:mx-auto lg:mx-0 mb-6">
-            {heroDescription}
-          </p>
+          {heroTitle1 && (
+            <h1 className="text-4xl lg:text-5xl font-bold mb-4 leading-tight">
+              {renderTitle()}
+            </h1>
+          )}
+
+          {heroDescription && (
+            <p className="text-base sm:text-lg lg:text-xl max-w-xl sm:mx-auto lg:mx-0 mb-6">
+              {heroDescription}
+            </p>
+          )}
 
           <div className="bg-black/40 p-4 rounded-md inline-block">
             <p className="mb-2 text-sm text-white">Need Help Now? Call Our Experts:</p>
@@ -42,11 +62,7 @@ export default function Hero({ title, subtitle, imgsrc }) {
         </div>
 
         <div className="w-full sm:w-auto lg:max-w-md">
-          <ConsultationForm
-            formTitle="HOW MUCH WILL IT COST?"
-            formDescription="Get A Free, No-Obligation Quote"
-            className="bg-accent w-full"
-          />
+          <ConsultationForm className="bg-accent w-full" />
         </div>
       </div>
     </section>

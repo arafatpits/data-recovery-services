@@ -19,11 +19,7 @@ const FormSchema = z.object({
   deviceType: z.string().optional(),
 });
 
-export default function ConsultationForm({
-  formTitle,
-  formDescription,
-  className = "",
-}) {
+export default function ConsultationForm({ className = "" }) {
   const [isClient, setIsClient] = useState(false);
   const [recaptchaReady, setRecaptchaReady] = useState(false);
 
@@ -119,9 +115,8 @@ export default function ConsultationForm({
     form.submit();
   };
 
-  const effectiveFormTitle = formTitle || "Get Free Evaluation";
-  const effectiveFormDescription =
-    formDescription || "Fill out the form and we'll contact you within 1 hour";
+  const effectiveFormTitle = "HOW MUCH WILL IT COST?";
+  const effectiveFormDescription = "Get A Free, No-Obligation Quote";
 
   const renderError = (field) =>
     errors[field] ? (
@@ -204,10 +199,12 @@ export default function ConsultationForm({
           className="w-full text-sm px-3 py-2 border-input text-foreground bg-background focus:border-ring placeholder:text-muted-foreground"
         />
 
-        {isClient && <div className="g-recaptcha" />}
-        {!recaptchaReady && (
-          <p className="text-sm text-muted-foreground">Loading reCAPTCHA…</p>
-        )}
+        <div className="min-h-[78px]">
+          {isClient && <div className="g-recaptcha" />}
+          {isClient && !recaptchaReady && (
+            <p className="text-sm text-white">Loading reCAPTCHA…</p>
+          )}
+        </div>
 
         <Button type="submit" className="w-full text-base h-10 mt-2">
           Request Free Evaluation

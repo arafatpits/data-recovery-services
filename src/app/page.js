@@ -52,9 +52,10 @@ export default function HomePage() {
   return (
     <PageShell
       heroProps={{
-        title: "Professional data Recovery Services",
+        title1: "Facing Data Loss?",
+        title2:"We’re Here to Assist",
         subtitle:
-          "Recover lost data from hard drives, SSDs, RAID systems, flash drives, and more — with industry-leading success rates and secure handling.",
+          "Our engineers specialise in recovering data from damaged, failed, or unresponsive storage devices.",
         imgsrc: "/images/data-recovery-workspace.jpg",
       }}
     >
@@ -64,15 +65,13 @@ export default function HomePage() {
             {/* LEFT: Content */}
             <div className="text-left sm:text-center lg:text-left">
               <h2 className="text-3xl lg:text-4xl font-bold text-heading mb-2 leading-tight">
-                Lost Critical Files?
+                Can’t Access Your Data?
               </h2>
               <p className="text-accent text-xl font-medium mb-4">
-                We're Here to Help You Get It Back
+               We Help Recover What Matters Most
               </p>
               <p className="text-base lg:text-lg sm:mx-auto lg:mx-0 text-body max-w-xl mb-6 leading-relaxed">
-                Losing important data is frustrating. Our certified recovery
-                engineers are here to help retrieve what's lost — safely,
-                securely, and with full transparency throughout the process.
+               Whether it’s a single hard drive, SSD, or a complex RAID system, our specialists work quickly to diagnose the issue and restore your data securely, accurately, and with full transparency at every step.
               </p>
 
               {/* Trust Items - Icons + Titles only, wrap on mobile */}
@@ -114,7 +113,7 @@ export default function HomePage() {
               alt="Data Recovery Workspace"
               width={600}
               height={300}
-              className="rounded-xl shadow-md w-full h-auto"
+              className="w-full"
             />
           </div>
         </div>
