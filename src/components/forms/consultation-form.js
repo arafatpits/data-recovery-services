@@ -14,7 +14,7 @@ const FormSchema = z.object({
   first_name: z.string().min(1, "First name is required"),
   last_name: z.string().min(1, "Last name is required"),
   email: z.string().email("Invalid email address"),
-  phone: z.string().regex(/^\d+$/, "Invalid phone number"),
+  phone: z.string().regex(/^[\d+\-() ]+$/, "Invalid phone number"),
   description: z.string().optional(),
   deviceType: z.string().optional(),
 });
@@ -31,8 +31,46 @@ export default function ConsultationForm({ className = "" }) {
     resolver: zodResolver(FormSchema),
   });
 
+  const getLocalValue = (key) => {
+    try {
+      const stored = JSON.parse(localStorage.getItem(key) || "null");
+      return stored?.value || "";
+    } catch {
+      return "";
+    }
+  };
+
+  const [tracking, setTracking] = useState({
+    gclid: "",
+    campaignid: "",
+    adgroupid: "",
+  });
+
   useEffect(() => {
     setIsClient(true);
+
+    const params = new URLSearchParams(window.location.search);
+
+    const keys = ["gclid", "campaignid", "adgroupid"];
+    const newTracking = {};
+
+    keys.forEach((key) => {
+      const urlVal = params.get(key);
+      const localStored = getLocalValue(key);
+      const valueToUse = urlVal || localStored;
+
+      newTracking[key] = valueToUse;
+
+      // Store in localStorage if new or different
+      if (urlVal && urlVal !== localStored) {
+        localStorage.setItem(
+          key,
+          JSON.stringify({ value: urlVal, timestamp: Date.now() })
+        );
+      }
+    });
+
+    setTracking(newTracking);
 
     const checkRecaptcha = setInterval(() => {
       if (typeof window !== "undefined" && window.grecaptcha) {
@@ -56,9 +94,11 @@ export default function ConsultationForm({ className = "" }) {
       if (!response || response.value.trim() === "") {
         const captchaField = document.getElementsByName("captcha_settings")[0];
         if (captchaField) {
-          const settings = JSON.parse(captchaField.value);
-          settings.ts = JSON.stringify(new Date().getTime());
-          captchaField.value = JSON.stringify(settings);
+          try {
+            const settings = JSON.parse(captchaField.value);
+            settings.ts = JSON.stringify(new Date().getTime());
+            captchaField.value = JSON.stringify(settings);
+          } catch {}
         }
       }
     }, 500);
@@ -70,9 +110,7 @@ export default function ConsultationForm({ className = "" }) {
     "w-full h-9 text-sm px-3 py-2 border-input text-foreground bg-background focus:border-ring placeholder:text-muted-foreground";
 
   const onSubmit = (data) => {
-    const captchaResponse = document.getElementById(
-      "g-recaptcha-response"
-    )?.value;
+    const captchaResponse = document.getElementById("g-recaptcha-response")?.value;
     if (!captchaResponse) {
       alert("Please complete the reCAPTCHA.");
       return;
@@ -92,7 +130,7 @@ export default function ConsultationForm({ className = "" }) {
     };
 
     addField("oid", "00D4P000000kBh7");
-    addField("retURL", "https://www.pitsdatarecovery.com/thank-you");
+    addField("retURL", "https://www.datarecoveryservices.com/thank-you");
     addField(
       "captcha_settings",
       JSON.stringify({
@@ -110,6 +148,11 @@ export default function ConsultationForm({ className = "" }) {
     addField("description", data.description);
     addField("device_type__c", data.deviceType);
     addField("g-recaptcha-response", captchaResponse);
+
+    // Salesforce custom field IDs
+    addField("00NUN000002Esgv", tracking.campaignid);
+    addField("00NUN000002EsiX", tracking.adgroupid);
+    addField("00N6Q000003PTHS", tracking.gclid);
 
     document.body.appendChild(form);
     form.submit();
@@ -206,7 +249,7 @@ export default function ConsultationForm({ className = "" }) {
           )}
         </div>
 
-        <Button type="submit" className="w-full text-base h-10 mt-2">
+        <Button type="submit" className="w-full text-base h-10 mt-2 cursor-pointer">
           Request Free Evaluation
         </Button>
 

@@ -2,10 +2,6 @@ import { Inter, Montserrat } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
-import OurProcess from "@/components/sections/OurProcess";
-import CustomerReview from "@/components/sections/CustomerReview";
-import FinalCTA from "@/components/sections/FinalCta";
-import WhyChooseUs from "@/components/sections/WhyChooseUs";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -23,6 +19,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${inter.variable} ${montserrat.variable}`}>
       <head>
+        <title>Professional Data Recovery Services</title>
+  <meta name="description" content="Recover data from hard drives, SSDs, RAID & more – fast, secure, and professional."></meta>
+        <link rel="icon" href="/images/drs-favicon.svg" type="image/svg+xml" />
         <script
           src="https://www.google.com/recaptcha/api.js"
           async
@@ -31,14 +30,7 @@ export default function RootLayout({ children }) {
       </head>
       <body className="font-body bg-background text-foreground antialiased">
         <Header />
-        <main>
-          {children}
-          <WhyChooseUs/>
-          <OurProcess />
-          <CustomerReview />
-          <FinalCTA />
-        </main>
-
+        <main>{children}</main>
         <Footer />
       </body>
     </html>
