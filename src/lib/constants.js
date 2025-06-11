@@ -2,8 +2,8 @@ export const COMPANY_INFO = {
   name: "Data Recovery Services",
   tagline: "Professional Data Recovery Solutions",
   phone: {
-    display: "123-456-7890", 
-    tel: "1234567890",
+    display: "800-836-5414", 
+    tel: "8008365414",
   },
   email: "info@datarecoveryservices.com",
 }

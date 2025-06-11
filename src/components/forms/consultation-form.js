@@ -1,169 +1,215 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { ShieldCheck } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Textarea } from "@/components/ui/textarea"
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { ShieldCheck } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@/components/ui/button";
+
+const FormSchema = z.object({
+  company: z.string().optional(),
+  first_name: z.string().min(1, "First name is required"),
+  last_name: z.string().min(1, "Last name is required"),
+  email: z.string().email("Invalid email address"),
+  phone: z.string().regex(/^\d+$/, "Invalid phone number"),
+  description: z.string().optional(),
+  deviceType: z.string().optional(),
+});
 
 export default function ConsultationForm({
   formTitle,
   formDescription,
   className = "",
 }) {
-  const [formData, setFormData] = useState({
-    companyName: "",
-    firstName: "",
-    lastName: "",
-    email: "",
-    phone: "",
-    deviceType: "",
-    message: "",
-  })
+  const [isClient, setIsClient] = useState(false);
+  const [recaptchaReady, setRecaptchaReady] = useState(false);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault()
-    console.log("Form submitted:", formData)
-    alert("Form submitted! We will contact you shortly.")
-    setFormData({
-      companyName: "",
-      firstName: "",
-      lastName: "",
-      email: "",
-      phone: "",
-      deviceType: "",
-      message: "",
-    })
-  }
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: zodResolver(FormSchema),
+  });
 
-  const handleInputChange = (field, value) => {
-    setFormData((prev) => ({ ...prev, [field]: value }))
-  }
+  useEffect(() => {
+    setIsClient(true);
 
-  const deviceTypes = [
-    "Hard Drive (HDD)", "Solid State Drive (SSD)", "RAID Array", "USB Drive",
-    "SD Card", "Smartphone", "Laptop", "Desktop Computer", "Server", "Other",
-  ]
+    const checkRecaptcha = setInterval(() => {
+      if (typeof window !== "undefined" && window.grecaptcha) {
+        setRecaptchaReady(true);
+        const container = document.querySelector(".g-recaptcha");
+        if (container && !container.hasChildNodes()) {
+          window.grecaptcha.render(container, {
+            sitekey: "6Lekm7kUAAAAAHeKlzuz9PFPSJUDnfcmJeSqiYkB",
+          });
+        }
+        clearInterval(checkRecaptcha);
+      }
+    }, 100);
 
-  const effectiveFormTitle = formTitle || "Get Free Evaluation"
-  const effectiveFormDescription = formDescription || "Fill out the form and we'll contact you within 1 hour"
+    return () => clearInterval(checkRecaptcha);
+  }, []);
 
-  const inputBaseClass = "w-full h-9 text-sm px-3 py-2 border-input text-foreground bg-background focus:border-ring placeholder:text-muted-foreground"
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const response = document.getElementById("g-recaptcha-response");
+      if (!response || response.value.trim() === "") {
+        const captchaField = document.getElementsByName("captcha_settings")[0];
+        if (captchaField) {
+          const settings = JSON.parse(captchaField.value);
+          settings.ts = JSON.stringify(new Date().getTime());
+          captchaField.value = JSON.stringify(settings);
+        }
+      }
+    }, 500);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  const inputBaseClass =
+    "w-full h-9 text-sm px-3 py-2 border-input text-foreground bg-background focus:border-ring placeholder:text-muted-foreground";
+
+  const onSubmit = (data) => {
+    const captchaResponse = document.getElementById(
+      "g-recaptcha-response"
+    )?.value;
+    if (!captchaResponse) {
+      alert("Please complete the reCAPTCHA.");
+      return;
+    }
+
+    const form = document.createElement("form");
+    form.method = "POST";
+    form.action =
+      "https://webto.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8&orgId=00D4P000000kBh7";
+
+    const addField = (name, value) => {
+      const input = document.createElement("input");
+      input.type = "hidden";
+      input.name = name;
+      input.value = value || "";
+      form.appendChild(input);
+    };
+
+    addField("oid", "00D4P000000kBh7");
+    addField("retURL", "https://www.pitsdatarecovery.com/thank-you");
+    addField(
+      "captcha_settings",
+      JSON.stringify({
+        keyname: "googlecaptchav2",
+        fallback: "true",
+        orgId: "00D4P000000kBh7",
+        ts: JSON.stringify(new Date().getTime()),
+      })
+    );
+    addField("company", data.company);
+    addField("first_name", data.first_name);
+    addField("last_name", data.last_name);
+    addField("email", data.email);
+    addField("phone", data.phone);
+    addField("description", data.description);
+    addField("device_type__c", data.deviceType);
+    addField("g-recaptcha-response", captchaResponse);
+
+    document.body.appendChild(form);
+    form.submit();
+  };
+
+  const effectiveFormTitle = formTitle || "Get Free Evaluation";
+  const effectiveFormDescription =
+    formDescription || "Fill out the form and we'll contact you within 1 hour";
+
+  const renderError = (field) =>
+    errors[field] ? (
+      <p className="text-sm text-destructive bg-white rounded-md px-3 py-1 mt-1">
+        {errors[field].message}
+      </p>
+    ) : null;
 
   return (
     <div className={`bg-accent p-5 sm:p-6 rounded-xl shadow-xl ${className}`}>
       <div className="text-center mb-6">
-        <h2 className=" text-xl sm:text-2xl font-bold text-heading mb-1">
+        <h2 className="text-xl sm:text-2xl font-bold text-heading mb-1">
           {effectiveFormTitle}
         </h2>
-        {effectiveFormDescription && (
-          <p className="text-heading text-sm">
-            {effectiveFormDescription}
-          </p>
-        )}
+        <p className="text-heading text-sm">{effectiveFormDescription}</p>
       </div>
-      <form onSubmit={handleSubmit} className="space-y-3 text-foreground" noValidate>
-        <label htmlFor="companyName" className="sr-only">Company Name</label>
+
+      <form
+        className="space-y-3 text-foreground"
+        onSubmit={handleSubmit(onSubmit)}
+        noValidate
+      >
         <Input
-          id="companyName"
-          type="text"
-          value={formData.companyName}
-          onChange={(e) => handleInputChange("companyName", e.target.value)}
+          id="company"
           placeholder="Company Name (Optional)"
+          {...register("company")}
           className={inputBaseClass}
         />
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-3 gap-y-3">
           <div>
-            <label htmlFor="firstName" className="sr-only">First Name</label>
             <Input
-              id="firstName"
-              type="text"
-              required
-              aria-required="true"
-              value={formData.firstName}
-              onChange={(e) => handleInputChange("firstName", e.target.value)}
+              id="first_name"
               placeholder="First Name (Required)"
+              {...register("first_name")}
               className={inputBaseClass}
             />
+            {renderError("first_name")}
           </div>
           <div>
-            <label htmlFor="lastName" className="sr-only">Last Name</label>
             <Input
-              id="lastName"
-              type="text"
-              required
-              aria-required="true"
-              value={formData.lastName}
-              onChange={(e) => handleInputChange("lastName", e.target.value)}
+              id="last_name"
               placeholder="Last Name (Required)"
+              {...register("last_name")}
               className={inputBaseClass}
             />
+            {renderError("last_name")}
           </div>
         </div>
 
-        <label htmlFor="email" className="sr-only">Email</label>
-        <Input
-          id="email"
-          type="email"
-          required
-          aria-required="true"
-          value={formData.email}
-          onChange={(e) => handleInputChange("email", e.target.value)}
-          placeholder="Email Address (Required)"
-          className={inputBaseClass}
-        />
-
-        <label htmlFor="phone" className="sr-only">Phone</label>
-        <Input
-          id="phone"
-          type="tel"
-          required
-          aria-required="true"
-          value={formData.phone}
-          onChange={(e) => handleInputChange("phone", e.target.value)}
-          placeholder="Phone Number (Required)"
-          className={inputBaseClass}
-        />
-
         <div>
-          <label htmlFor="deviceType" className="sr-only">Device Type</label>
-          <Select
-            required
-            name="deviceType"
-            value={formData.deviceType}
-            onValueChange={(value) => handleInputChange("deviceType", value)}
-          >
-            <SelectTrigger
-              id="deviceType"
-              className={inputBaseClass}
-              aria-required="true"
-              aria-label="Device Type"
-            >
-              <SelectValue placeholder="Device Type (Required)" />
-            </SelectTrigger>
-            <SelectContent className="bg-popover text-popover-foreground">
-              {deviceTypes.map((device) => (
-                <SelectItem key={device} value={device} className="hover:text-white hover:bg-accent">
-                  {device}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+          <Input
+            id="email"
+            type="email"
+            placeholder="Email Address (Required)"
+            {...register("email")}
+            className={inputBaseClass}
+          />
+          {renderError("email")}
         </div>
 
-        <label htmlFor="message" className="sr-only">Additional Details</label>
+        <div>
+          <Input
+            id="phone"
+            type="tel"
+            placeholder="Phone Number (Required)"
+            {...register("phone")}
+            className={inputBaseClass}
+          />
+          {renderError("phone")}
+        </div>
+
+        <input type="hidden" {...register("deviceType")} />
+
         <Textarea
-          id="message"
-          value={formData.message}
-          onChange={(e) => handleInputChange("message", e.target.value)}
-          placeholder="Additional Details (Optional)"
-          className="w-full text-sm px-3 py-2 border-input text-foreground bg-background focus:border-ring placeholder:text-muted-foreground"
+          id="description"
           rows={4}
+          placeholder="Additional Details (Optional)"
+          {...register("description")}
+          className="w-full text-sm px-3 py-2 border-input text-foreground bg-background focus:border-ring placeholder:text-muted-foreground"
         />
 
-        <Button type="submit" className="w-full text-base h-10">
+        {isClient && <div className="g-recaptcha" />}
+        {!recaptchaReady && (
+          <p className="text-sm text-muted-foreground">Loading reCAPTCHA…</p>
+        )}
+
+        <Button type="submit" className="w-full text-base h-10 mt-2">
           Request Free Evaluation
         </Button>
 
@@ -175,5 +221,5 @@ export default function ConsultationForm({
         </div>
       </form>
     </div>
-  )
+  );
 }

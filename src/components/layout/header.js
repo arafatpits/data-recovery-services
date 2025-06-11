@@ -40,7 +40,7 @@ export default function Header() {
                 alt="Company Logo"
                 width={250}
                 height={40}
-                className="h-20 w-auto object-contain"
+                className="h-10 w-auto object-contain"
                 priority
               />
             </Link>
