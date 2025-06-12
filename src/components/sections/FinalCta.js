@@ -1,6 +1,7 @@
-import { Button } from "@/components/ui/button"
-import { Phone, FileText, CheckCircle } from "lucide-react"
-import { COMPANY_INFO } from "@/lib/constants"
+import { Button } from "@/components/ui/button";
+import { Phone, FileText, CheckCircle } from "lucide-react";
+import { COMPANY_INFO } from "@/lib/constants";
+import FormDialogButton from "../ui/FormDialogButton";
 
 export default function FinalCTA() {
   return (
@@ -12,7 +13,8 @@ export default function FinalCTA() {
             Ready to Recover Your Data?
           </h2>
           <p className="text-xl md:text-2xl text-primary-foreground/90 mb-6 md:mb-10 max-w-3xl sm:mx-auto leading-relaxed">
-            Our engineers are on standby 24/7. Speak with a specialist or request a free quote to get started.
+            Our engineers are on standby 24/7. Speak with a specialist or
+            request a free quote to get started.
           </p>
         </div>
 
@@ -20,7 +22,7 @@ export default function FinalCTA() {
         <div className="flex flex-col sm:flex-row gap-4 sm:gap-5 justify-center items-center">
           <Button
             size="lg"
-            className="w-full sm:w-auto inline-flex items-center gap-4 px-8 py-5 text-lg font-semibold bg-accent-600 hover:bg-accent-700 text-white shadow-lg"
+            className="w-full sm:w-auto inline-flex items-center gap-4 px-8 py-5 text-lg font-semibold bg-accent-600/80 hover:bg-accent-700/80 text-white shadow-lg"
             asChild
           >
             <a href={`tel:${COMPANY_INFO.phone.tel}`}>
@@ -29,19 +31,23 @@ export default function FinalCTA() {
             </a>
           </Button>
 
-          <Button
+          <FormDialogButton
             size="lg"
             variant="secondary"
             className="w-full sm:w-auto inline-flex items-center gap-4 px-8 py-5 text-lg font-medium"
           >
             <FileText className="w-6 h-6" />
             Get Free Quote
-          </Button>
+          </FormDialogButton>
         </div>
 
         {/* Features */}
         <ul className="mt-10 flex flex-wrap justify-center items-center gap-4 text-sm text-white">
-          {["No data, no fee", "Free diagnostics", "24/7 emergency service"].map((text, idx, arr) => (
+          {[
+            "No data, no fee",
+            "Free diagnostics",
+            "24/7 emergency service",
+          ].map((text, idx, arr) => (
             <li key={idx} className="flex items-center gap-2">
               <CheckCircle className="w-4 h-4 text-white" />
               <span>{text}</span>
@@ -53,5 +59,5 @@ export default function FinalCTA() {
         </ul>
       </div>
     </section>
-  )
+  );
 }

@@ -133,3 +133,8 @@ h6 {
   font-family: var(--font-heading);
   font-weight: 600;
 }
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 70px;
+}

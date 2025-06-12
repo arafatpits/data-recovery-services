@@ -1,13 +1,13 @@
-import { MessageCircle, Package, Database } from "lucide-react"
+import { MessageCircle, Package, Database } from "lucide-react";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import SectionHeader from "../ui/SectionHeader"
+} from "@/components/ui/card";
+import SectionHeader from "../ui/SectionHeader";
+import FormDialogButton from "../ui/FormDialogButton";
 
 const steps = [
   {
@@ -31,14 +31,17 @@ const steps = [
     icon: Database,
     step: "03",
   },
-]
+];
 
 export default function ProcessSection() {
   return (
     <section className="pt-10 lg:pt-16 pb-20 bg-muted">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <SectionHeader title="How We Recover Your Data" description="A Clear, 3-Step Process Focused on Precision, Security, and Results"/>
+        <SectionHeader
+          title="How We Recover Your Data"
+          description="A Clear, 3-Step Process Focused on Precision, Security, and Results"
+        />
 
         {/* Timeline */}
         <div className="relative">
@@ -53,7 +56,7 @@ export default function ProcessSection() {
           {/* Cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
             {steps.map((step, index) => {
-              const Icon = step.icon
+              const Icon = step.icon;
               return (
                 <div key={index} className="relative">
                   <Card className="h-full gap-4 lg:gap-5 border border-border bg-card text-heading shadow-sm">
@@ -79,22 +82,16 @@ export default function ProcessSection() {
                     </CardContent>
                   </Card>
                 </div>
-              )
+              );
             })}
           </div>
         </div>
 
         {/* CTA */}
         <div className="text-center mt-12">
-          <Button
-            size="lg"
-            className="inline-flex items-center gap-2 px-6 py-3 text-base font-medium text-white"
-          >
-            <Database className="w-5 h-5" />
-            <span>Start Your Recovery Process</span>
-          </Button>
+          <FormDialogButton className="text-lg" size="lg">Start Your Recovery Process</FormDialogButton>
         </div>
       </div>
     </section>
-  )
+  );
 }

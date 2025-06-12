@@ -19,7 +19,8 @@ const FormSchema = z.object({
   deviceType: z.string().optional(),
 });
 
-export default function ConsultationForm({ className = "" }) {
+export default function ConsultationForm({ className = "", recaptchaId = "recaptcha-form1" }) {
+
   const [isClient, setIsClient] = useState(false);
   const [recaptchaReady, setRecaptchaReady] = useState(false);
 
@@ -75,7 +76,8 @@ export default function ConsultationForm({ className = "" }) {
     const checkRecaptcha = setInterval(() => {
       if (typeof window !== "undefined" && window.grecaptcha) {
         setRecaptchaReady(true);
-        const container = document.querySelector(".g-recaptcha");
+        const container = document.getElementById(recaptchaId);
+
         if (container && !container.hasChildNodes()) {
           window.grecaptcha.render(container, {
             sitekey: "6Lekm7kUAAAAAHeKlzuz9PFPSJUDnfcmJeSqiYkB",
@@ -86,7 +88,7 @@ export default function ConsultationForm({ className = "" }) {
     }, 100);
 
     return () => clearInterval(checkRecaptcha);
-  }, []);
+  }, [recaptchaId]); // Added recaptchaId to dependency array
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -243,7 +245,7 @@ export default function ConsultationForm({ className = "" }) {
         />
 
         <div className="min-h-[78px]">
-          {isClient && <div className="g-recaptcha" />}
+          {isClient && <div id={recaptchaId} className="g-recaptcha" />}
           {isClient && !recaptchaReady && (
             <p className="text-sm text-white">Loading reCAPTCHA…</p>
           )}
