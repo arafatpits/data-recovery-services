@@ -1,28 +1,23 @@
 "use client"
 
 import { useSearchParams } from "next/navigation"
-import { useMemo, useState, useEffect } from "react"
+import { useMemo } from "react"
 import { COMPANY_INFO } from "@/lib/constants"
-import FormDialogButton from "../ui/FormDialogButton"
+
+
+const DEFAULT_CONTENT = {
+  title: "Start Your Data Recovery Journey Today",
+  description:
+    "Our team is ready to help you get it back. Speak with a specialist or request a free quote today to start your recovery process.",
+}
 
 export default function PageCTA({ className = "" }) {
-  const [mounted, setMounted] = useState(false)
   const searchParams = useSearchParams()
-  const keyword = mounted ? searchParams?.get("keyword")?.toLowerCase() || "" : ""
-
-  useEffect(() => {
-    setMounted(true)
-  }, [])
+  const keyword = searchParams?.get("keyword")?.toLowerCase() || ""
 
   const { title, description } = useMemo(() => {
-    if (!mounted) {
-      // Return default content during SSR/static generation
-      return {
-        title: "Start Your Data Recovery Journey Today",
-        description:
-          "Our team is ready to help you get it back. Speak with a specialist or request a free quote today to start your recovery process.",
-      }
-    }
+  
+    if (!keyword) return DEFAULT_CONTENT
 
     if (keyword.includes("hard drive")) {
       return {
@@ -70,13 +65,9 @@ export default function PageCTA({ className = "" }) {
       }
     }
 
-    // Fallback
-    return {
-      title: "Start Your Data Recovery Journey Today",
-      description:
-        "Our team is ready to help you get it back. Speak with a specialist or request a free quote today to start your recovery process.",
-    }
-  }, [keyword, mounted])
+
+    return DEFAULT_CONTENT
+  }, [keyword]) 
 
   return (
     <section className={`bg-primary-800 pt-16 pb-20 ${className}`}>
@@ -99,11 +90,6 @@ export default function PageCTA({ className = "" }) {
             </a>
           </div>
 
-          <div className="sm:pt-0">
-            <FormDialogButton size="lg" className="text-lg text-white/90 hover:text-white underline underline-offset-4">
-              or submit a form
-            </FormDialogButton>
-          </div>
         </div>
       </div>
     </section>

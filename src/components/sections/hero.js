@@ -1,22 +1,26 @@
 "use client"
 
 import { useSearchParams } from "next/navigation"
-import { useMemo, useEffect, useState } from "react"
+import { useMemo, useEffect } from "react"
 import { COMPANY_INFO } from "@/lib/constants"
 import ConsultationForm from "@/components/forms/consultation-form"
 import { Phone } from "lucide-react"
 
+
+const DEFAULT_CONTENT = {
+  title1: "Lost Your Data?",
+  title2: "We'll Help You Recover It.",
+  subtitle: "From hard drives to RAID arrays — we provide secure recovery for all storage types and failure scenarios.",
+  imgsrc: "/images/services-bg/hard-drive.webp",
+}
+
 export default function Hero() {
-  const [mounted, setMounted] = useState(false)
   const searchParams = useSearchParams()
-  const keyword = mounted ? searchParams?.get("keyword")?.toLowerCase() || "" : ""
+  const keyword = searchParams?.get("keyword")?.toLowerCase() || ""
 
   useEffect(() => {
-    setMounted(true)
-  }, [])
 
-  useEffect(() => {
-    if (!mounted) return
+    if (!keyword) return
 
     if (keyword.includes("hard drive")) {
       document.title = "Hard Drive Data Recovery – Get Your Files Back"
@@ -38,22 +42,12 @@ export default function Hero() {
       document.title = "Laptop Data Recovery – Windows & Mac Support"
     } else if (keyword.includes("quickbooks")) {
       document.title = "QuickBooks File Recovery – Restore QBW and Backup Files"
-    } else {
-      document.title = "Data Recovery Services – Restore Lost or Inaccessible Files"
     }
-  }, [keyword, mounted])
+  }, [keyword])
 
   const content = useMemo(() => {
-    if (!mounted) {
-      // Return default content during SSR/static generation
-      return {
-        title1: "Lost Your Data?",
-        title2: "We'll Help You Recover It.",
-        subtitle:
-          "From hard drives to RAID arrays — we provide secure recovery for all storage types and failure scenarios.",
-        imgsrc: "/images/services-bg/hard-drive.webp",
-      }
-    }
+ 
+    if (!keyword) return DEFAULT_CONTENT
 
     if (keyword.includes("hard drive")) {
       return {
@@ -116,15 +110,9 @@ export default function Hero() {
       }
     }
 
-    // Fallback/default
-    return {
-      title1: "Lost Your Data?",
-      title2: "We'll Help You Recover It.",
-      subtitle:
-        "From hard drives to RAID arrays — we provide secure recovery for all storage types and failure scenarios.",
-      imgsrc: "/images/services-bg/hard-drive.webp",
-    }
-  }, [keyword, mounted])
+ 
+    return DEFAULT_CONTENT
+  }, [keyword])
 
   return (
     <section

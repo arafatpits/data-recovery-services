@@ -132,7 +132,11 @@ export default function ConsultationForm({ className = "", recaptchaId = "recapt
     };
 
     addField("oid", "00D4P000000kBh7");
-    addField("retURL", "https://www.datarecoveryservices.com/thank-you");
+    addField(
+  "retURL",
+  `https://www.datarecoveryservices.com/thank-you?phone=${encodeURIComponent(data.phone)}&email=${encodeURIComponent(data.email)}`
+);
+
     addField(
       "captcha_settings",
       JSON.stringify({

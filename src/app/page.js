@@ -1,16 +1,14 @@
 import { Shield, CheckCircle, Users } from "lucide-react";
 import Image from "next/image";
-import PageCTA from "@/components/sections/PageCta";
 import SectionHeader from "@/components/ui/SectionHeader";
 import ServiceGrid from "@/components/sections/ServiceGrid";
 import OurProcess from "@/components/sections/OurProcess";
 import CustomerReview from "@/components/sections/CustomerReview";
 import FinalCTA from "@/components/sections/FinalCta";
 import WhyChooseUs from "@/components/sections/WhyChooseUs";
-import Hero from "@/components/sections/hero";
-import FormDialogButton from "@/components/ui/FormDialogButton";
 import HeroWrapper from "@/components/hero-wrapper";
 import PageCTAWrapper from "@/components/page-cta-wraooer";
+
 const services = [
   {
     title: "Hard Drive Recovery",
@@ -65,7 +63,7 @@ const services = [
 export default function HomePage() {
   return (
     <>
-      <HeroWrapper/>
+   <HeroWrapper/>
       <section className="pt-10 lg:pt-16 pb-20 bg-muted">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-8 items-center">
@@ -107,13 +105,13 @@ export default function HomePage() {
               </div>
 
               {/* CTA */}
-
-              <FormDialogButton
-                size="lg"
-                className="text-base w-full sm:w-auto"
+              <a
+                href="#consultation-form"
+                className="inline-flex items-center justify-center text-base w-full sm:w-auto px-6 py-3 rounded-md bg-primary text-primary-foreground hover:bg-primary-800 transition-colors duration-200"
               >
                 Get Your Free Consultation Now
-              </FormDialogButton>
+              </a>
+
               <p className="text-xs text-center lg:text-left text-muted-foreground mt-2">
                 No commitment required • Response within 24 hours
               </p>
@@ -140,7 +138,7 @@ export default function HomePage() {
           <ServiceGrid services={services} />
         </div>
       </section>
-  <PageCTAWrapper/>
+      <PageCTAWrapper/>
       <WhyChooseUs />
       <OurProcess />
       <CustomerReview />

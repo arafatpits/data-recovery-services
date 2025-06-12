@@ -7,7 +7,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import SectionHeader from "../ui/SectionHeader";
-import FormDialogButton from "../ui/FormDialogButton";
+
 
 const steps = [
   {
@@ -89,7 +89,13 @@ export default function ProcessSection() {
 
         {/* CTA */}
         <div className="text-center mt-12">
-          <FormDialogButton className="text-lg" size="lg">Start Your Recovery Process</FormDialogButton>
+         <a
+  href="#consultation-form"
+  className="text-lg inline-flex items-center justify-center px-6 py-3 rounded-md bg-primary text-primary-foreground hover:bg-primary-800 transition-colors duration-200"
+>
+  Start Your Recovery Process
+</a>
+
         </div>
       </div>
     </section>

@@ -1,7 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Phone, FileText, CheckCircle } from "lucide-react";
 import { COMPANY_INFO } from "@/lib/constants";
-import FormDialogButton from "../ui/FormDialogButton";
 
 export default function FinalCTA() {
   return (
@@ -19,27 +18,25 @@ export default function FinalCTA() {
         </div>
 
         {/* CTA Buttons */}
-        <div className="flex flex-col sm:flex-row gap-4 sm:gap-5 justify-center items-center">
-          <Button
-            size="lg"
-            className="w-full sm:w-auto inline-flex items-center gap-4 px-8 py-5 text-lg font-semibold bg-accent-600/80 hover:bg-accent-700/80 text-white shadow-lg"
-            asChild
-          >
-            <a href={`tel:${COMPANY_INFO.phone.tel}`}>
-              <Phone className="w-6 h-6" />
-              Call {COMPANY_INFO.phone.display}
-            </a>
-          </Button>
+<div className="flex flex-col sm:flex-row gap-4 sm:gap-5 justify-center items-center">
+  <a
+    href={`tel:${COMPANY_INFO.phone.tel}`}
+    className="w-full sm:w-auto inline-flex items-center gap-4 px-7 py-4 text-lg font-semibold rounded-md bg-accent-600 hover:bg-accent-700 text-white shadow transition-colors duration-200"
+  >
+    <Phone className="w-5 h-5" />
+    Call {COMPANY_INFO.phone.display}
+  </a>
 
-          <FormDialogButton
-            size="lg"
-            variant="secondary"
-            className="w-full sm:w-auto inline-flex items-center gap-4 px-8 py-5 text-lg font-medium"
-          >
-            <FileText className="w-6 h-6" />
-            Get Free Quote
-          </FormDialogButton>
-        </div>
+  <a
+    href="#consultation-form"
+    className="w-full sm:w-auto inline-flex items-center gap-4 px-7 py-4 text-lg font-semibold rounded-md bg-primary hover:bg-primary-800 text-primary-foreground shadow transition-colors duration-200"
+  >
+    <FileText className="w-5 h-5" />
+    Get Free Quote
+  </a>
+</div>
+
+
 
         {/* Features */}
         <ul className="mt-10 flex flex-wrap justify-center items-center gap-4 text-sm text-white">

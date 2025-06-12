@@ -1,9 +1,44 @@
 import { CheckCircle, Clock } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { COMPANY_INFO } from "@/lib/constants";
-
+export const metadata = {
+  title: "Thank You - Data Recovery Request Submitted",
+  description:
+    "Thank you for contacting us about your data recovery needs. Our experts will review your case and contact you shortly.",
+  robots: "noindex, nofollow",
+}
 export default function ThankYouPage() {
   return (
+      <>
+      {/* Google Ads User Data Script */}
+      <script
+        dangerouslySetInnerHTML={{
+          __html: `
+            const searchParams = new URLSearchParams(window.location.search);
+            const email = searchParams.get('email')?.toLowerCase();
+            //const phone = searchParams.get('phone'); // Excluding phone for now
+
+            // Send data to Google Ads
+            if (email && typeof gtag !== 'undefined') {
+              gtag('set', 'user_data', {
+                "email": email,
+                //"phone_number": phone // Excluded for now
+              });
+            }
+          `,
+        }}
+      />
+
+      {/* Event snippet for Submit Lead Form conversion page */}
+      <script
+        dangerouslySetInnerHTML={{
+          __html: `
+            if (typeof gtag !== 'undefined') {
+              gtag('event', 'conversion', {'send_to': 'AW-17109057717/IMdWCKnZjM4aELWBnt4_'});
+            }
+          `,
+        }}
+      />
     <div className="bg-white flex items-center justify-center px-4 py-10">
       <Card className="w-full max-w-2xl shadow-2xl border-0 bg-white/80 backdrop-blur-sm">
         <CardHeader className="text-center pb-8">
@@ -57,5 +92,6 @@ export default function ThankYouPage() {
         </CardContent>
       </Card>
     </div>
+    </>
   );
 }
