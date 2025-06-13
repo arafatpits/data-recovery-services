@@ -20,8 +20,6 @@ export default function RootLayout({ children }) {
     <html lang="en" className={`${inter.variable} ${montserrat.variable}`}>
       <head>
         <meta name="robots" content="noindex, nofollow" />
-        <title>Professional Data Recovery Services</title>
-        <meta name="description" content="Recover data from hard drives, SSDs, RAID & more – fast, secure, and professional."></meta>
         <link rel="icon" href="/images/drs-favicon.svg" type="image/svg+xml" />
         
         {/* Google Tag Manager - Static Export Compatible */}

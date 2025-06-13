@@ -5,7 +5,6 @@ export const metadata = {
   title: "Thank You - Data Recovery Request Submitted",
   description:
     "Thank you for contacting us about your data recovery needs. Our experts will review your case and contact you shortly.",
-  robots: "noindex, nofollow",
 }
 export default function ThankYouPage() {
   return (

@@ -6,8 +6,14 @@ import OurProcess from "@/components/sections/OurProcess";
 import CustomerReview from "@/components/sections/CustomerReview";
 import FinalCTA from "@/components/sections/FinalCta";
 import WhyChooseUs from "@/components/sections/WhyChooseUs";
-import HeroWrapper from "@/components/hero-wrapper";
-import PageCTAWrapper from "@/components/page-cta-wraooer";
+import Hero from "@/components/sections/hero";
+import PageCTA from "@/components/sections/PageCta";
+
+export const metadata = {
+  title: "Expert Data Recovery Services for Hard Drives, SSDs & RAID",
+  description: "We help businesses recover lost data from hard drives, SSDs, RAID systems, and more. Fast, secure, and backed by a no data – no charge guarantee.",
+}
+
 
 const services = [
   {
@@ -63,7 +69,8 @@ const services = [
 export default function HomePage() {
   return (
     <>
-   <HeroWrapper/>
+   
+   <Hero/>
       <section className="pt-10 lg:pt-16 pb-20 bg-muted">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-8 items-center">
@@ -138,7 +145,7 @@ export default function HomePage() {
           <ServiceGrid services={services} />
         </div>
       </section>
-      <PageCTAWrapper/>
+      <PageCTA/>
       <WhyChooseUs />
       <OurProcess />
       <CustomerReview />
