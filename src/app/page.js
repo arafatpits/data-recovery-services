@@ -126,7 +126,7 @@ export default function HomePage() {
 
             {/* RIGHT: Direct Image */}
             <Image
-              src="/images/services-bg/hard-drive.webp"
+              src="/images/services-bg/data-recovery-workspace.webp"
               alt="Data Recovery Workspace"
               width={600}
               height={300}
