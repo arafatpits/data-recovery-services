@@ -1,4 +1,5 @@
 import Image from "next/image"
+import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { CheckCircle, Phone } from "lucide-react"
 import { COMPANY_INFO } from "@/lib/constants"
@@ -10,14 +11,16 @@ export default function Header() {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <div className="flex-shrink-0">
-            <Image
-              src="/images/drs-logo.svg"
-              alt="Company Logo"
-              width={200}
-              height={36}
-              className="h-8 sm:h-10 w-auto object-contain"
-              priority
-            />
+            <Link href="/" passHref>
+              <Image
+                src="/images/drs-logo.svg"
+                alt="Company Logo"
+                width={200}
+                height={36}
+                className="h-8 sm:h-10 w-auto object-contain"
+                priority
+              />
+            </Link>
           </div>
 
           {/* Right Side */}
