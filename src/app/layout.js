@@ -39,12 +39,6 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body className="font-body bg-background text-foreground antialiased">
-        <script
-          src="https://www.google.com/recaptcha/api.js"
-          async
-          defer
-        ></script>
-        
         <Header />
         <main>{children}</main>
         <Footer />
